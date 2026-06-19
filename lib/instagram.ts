@@ -1,4 +1,5 @@
 import { platformFromUrl, profileConfig } from "@/lib/config";
+import fallbackData from "@/lib/ig-fallback.json";
 
 export type SocialLink = {
   platform: string;
@@ -71,39 +72,10 @@ function tagline(bio: string, category?: string | null): string {
   return firstLine || "Creador de contenido";
 }
 
-// ---------------- Fallback (datos reales capturados, imágenes locales) ----------------
-const FALLBACK_POSTS: Post[] = [
-  { image: "/fallback/post-0.jpg", url: reelUrl("DZfYEPrzSkh"), caption: "Eso no me lo esperaba 😳", isVideo: true },
-  { image: "/fallback/post-1.jpg", url: reelUrl("DZQB1NvTQ7f"), caption: "Grande camarógrafo 🙈", isVideo: true },
-  { image: "/fallback/post-2.jpg", url: reelUrl("DYCr54ITiW-"), caption: "Peliculón el de Michael Jackson 😳", isVideo: true },
-  { image: "/fallback/post-3.jpg", url: reelUrl("DZrbgBCTy9y"), caption: "Nacen 5 hectáreas de yuca 😮‍💨", isVideo: true },
-  { image: "/fallback/post-4.jpg", url: reelUrl("DZrWp-1TvNj"), caption: "Cristiano Ronaldo no duerme hoy ❤️", isVideo: true },
-  { image: "/fallback/post-5.jpg", url: reelUrl("DZkVP3Pz6gE"), caption: "Destapar una costeñita para la calor 🙈", isVideo: true },
-  { image: "/fallback/post-6.jpg", url: reelUrl("DZdpMhQzQDm"), caption: "Ya basta freezeeer 😫", isVideo: true },
-  { image: "/fallback/post-7.jpg", url: reelUrl("DZcx-gPzVQr"), caption: "Bromita 🙈", isVideo: true },
-  { image: "/fallback/post-8.jpg", url: reelUrl("DZad8XnTsZf"), caption: "70 gatillazos no son suficientes 😮‍💨", isVideo: true },
-];
-
+// ---------------- Fallback ----------------
+// Generado con `npm run refresh:ig` (datos + imágenes locales en /public/fallback).
 const FALLBACK: Profile = {
-  username: "elmonocuc0",
-  name: "El Monocuco",
-  tagline: "Humor con sabor costeño · Cartagena",
-  bio: "🫵🏻 “Eres un chico fuerte, ayuda a los demás”\n😁 Humor con sabor costeño\n🌴 Cartagena vibes al 100%",
-  verified: false,
-  avatar: "/fallback/profile.jpg",
-  stats: [
-    { value: "6.4K", label: "Seguidores" },
-    { value: "303", label: "Publicaciones" },
-    { value: "128", label: "Seguidos" },
-    { value: profileConfig.customStat.value, label: profileConfig.customStat.label },
-  ],
-  socials: [
-    { platform: "instagram", label: "Instagram", url: "https://www.instagram.com/elmonocuc0/" },
-    { platform: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@elmonocuc0" },
-    { platform: "facebook", label: "Facebook", url: "https://www.facebook.com/Elmonocuco01/" },
-  ],
-  featured: FALLBACK_POSTS[0],
-  posts: FALLBACK_POSTS,
+  ...(fallbackData as Omit<Profile, "live">),
   live: false,
 };
 

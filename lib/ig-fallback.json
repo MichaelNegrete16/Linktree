@@ -1,0 +1,105 @@
+{
+  "username": "elmonocuc0",
+  "name": "El Monocuco",
+  "tagline": "Reel creator",
+  "bio": "🫵🏻“Eres un chico fuerte ayuda a los demás” \n😁 Humor con sabor costeño\n🌴 Cartagena vibes al 100%\n🙏🏻7k?",
+  "verified": false,
+  "avatar": "/fallback/profile.jpg",
+  "stats": [
+    {
+      "value": "6.6K",
+      "label": "Seguidores"
+    },
+    {
+      "value": "305",
+      "label": "Publicaciones"
+    },
+    {
+      "value": "130",
+      "label": "Seguidos"
+    },
+    {
+      "value": "Cartagena",
+      "label": "Ciudad"
+    }
+  ],
+  "socials": [
+    {
+      "platform": "instagram",
+      "label": "Instagram",
+      "url": "https://www.instagram.com/elmonocuc0/"
+    },
+    {
+      "platform": "web",
+      "label": "Páginas del Mono 🌴",
+      "url": "https://www.elmonocuco.com/"
+    },
+    {
+      "platform": "facebook",
+      "label": "Facebook",
+      "url": "https://www.facebook.com/Elmonocuco01/"
+    }
+  ],
+  "featured": {
+    "image": "/fallback/post-0.jpg",
+    "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
+    "caption": "Eso no me lo esperaba 😳",
+    "isVideo": true
+  },
+  "posts": [
+    {
+      "image": "/fallback/post-0.jpg",
+      "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
+      "caption": "Eso no me lo esperaba 😳",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-1.jpg",
+      "url": "https://www.instagram.com/reel/DZQB1NvTQ7f/",
+      "caption": "Grande camarógrafo 🙈",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-2.jpg",
+      "url": "https://www.instagram.com/reel/DYCr54ITiW-/",
+      "caption": "Peliculon el de Michael Jackson 😳",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-3.jpg",
+      "url": "https://www.instagram.com/reel/DZvH52VTscb/",
+      "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-4.jpg",
+      "url": "https://www.instagram.com/reel/DZu6vbATBAX/",
+      "caption": "No la bese no la beseeee 🥵",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-5.jpg",
+      "url": "https://www.instagram.com/reel/DZtCjmCzkJd/",
+      "caption": "El Congo con la realidad bien alterada; Ojito con el Congo 🇨🇩 👀",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-6.jpg",
+      "url": "https://www.instagram.com/reel/DZrbgBCTy9y/",
+      "caption": "Nacen 5 hectáreas de yuca de la que atora 😮‍💨🥵",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-7.jpg",
+      "url": "https://www.instagram.com/reel/DZrWp-1TvNj/",
+      "caption": "Cristiano Ronaldo no duerme hoy, con el hat-trick de messi ❤️",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-8.jpg",
+      "url": "https://www.instagram.com/reel/DZkVP3Pz6gE/",
+      "caption": "*procede a destapar una costeñita para la calor 🙈",
+      "isVideo": true
+    }
+  ]
+}
