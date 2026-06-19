@@ -7,7 +7,7 @@
   "avatar": "/fallback/profile.jpg",
   "stats": [
     {
-      "value": "6.6K",
+      "value": "6.7K",
       "label": "Seguidores"
     },
     {
@@ -15,7 +15,7 @@
       "label": "Publicaciones"
     },
     {
-      "value": "130",
+      "value": "131",
       "label": "Seguidos"
     },
     {
@@ -42,63 +42,63 @@
   ],
   "featured": {
     "image": "/fallback/post-0.jpg",
-    "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
-    "caption": "Eso no me lo esperaba 😳",
+    "url": "https://www.instagram.com/reel/DZvH52VTscb/",
+    "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
     "isVideo": true
   },
   "posts": [
     {
       "image": "/fallback/post-0.jpg",
-      "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
-      "caption": "Eso no me lo esperaba 😳",
-      "isVideo": true
-    },
-    {
-      "image": "/fallback/post-1.jpg",
-      "url": "https://www.instagram.com/reel/DZQB1NvTQ7f/",
-      "caption": "Grande camarógrafo 🙈",
-      "isVideo": true
-    },
-    {
-      "image": "/fallback/post-2.jpg",
-      "url": "https://www.instagram.com/reel/DYCr54ITiW-/",
-      "caption": "Peliculon el de Michael Jackson 😳",
-      "isVideo": true
-    },
-    {
-      "image": "/fallback/post-3.jpg",
       "url": "https://www.instagram.com/reel/DZvH52VTscb/",
       "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
       "isVideo": true
     },
     {
-      "image": "/fallback/post-4.jpg",
+      "image": "/fallback/post-1.jpg",
+      "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
+      "caption": "Eso no me lo esperaba 😳",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-2.jpg",
+      "url": "https://www.instagram.com/reel/DZQB1NvTQ7f/",
+      "caption": "Grande camarógrafo 🙈",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-3.jpg",
       "url": "https://www.instagram.com/reel/DZu6vbATBAX/",
       "caption": "No la bese no la beseeee 🥵",
       "isVideo": true
     },
     {
-      "image": "/fallback/post-5.jpg",
+      "image": "/fallback/post-4.jpg",
       "url": "https://www.instagram.com/reel/DZtCjmCzkJd/",
       "caption": "El Congo con la realidad bien alterada; Ojito con el Congo 🇨🇩 👀",
       "isVideo": true
     },
     {
-      "image": "/fallback/post-6.jpg",
+      "image": "/fallback/post-5.jpg",
       "url": "https://www.instagram.com/reel/DZrbgBCTy9y/",
       "caption": "Nacen 5 hectáreas de yuca de la que atora 😮‍💨🥵",
       "isVideo": true
     },
     {
-      "image": "/fallback/post-7.jpg",
+      "image": "/fallback/post-6.jpg",
       "url": "https://www.instagram.com/reel/DZrWp-1TvNj/",
       "caption": "Cristiano Ronaldo no duerme hoy, con el hat-trick de messi ❤️",
       "isVideo": true
     },
     {
-      "image": "/fallback/post-8.jpg",
+      "image": "/fallback/post-7.jpg",
       "url": "https://www.instagram.com/reel/DZkVP3Pz6gE/",
       "caption": "*procede a destapar una costeñita para la calor 🙈",
+      "isVideo": true
+    },
+    {
+      "image": "/fallback/post-8.jpg",
+      "url": "https://www.instagram.com/reel/DZdpMhQzQDm/",
+      "caption": "Ya basta freezeeer 😫😫😫",
       "isVideo": true
     }
   ]
