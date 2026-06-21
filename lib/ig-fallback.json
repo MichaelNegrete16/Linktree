@@ -7,11 +7,11 @@
   "avatar": "/fallback/profile.jpg",
   "stats": [
     {
-      "value": "6.7K",
+      "value": "6.9K",
       "label": "Seguidores"
     },
     {
-      "value": "305",
+      "value": "307",
       "label": "Publicaciones"
     },
     {
@@ -44,62 +44,82 @@
     "image": "/fallback/post-0.jpg",
     "url": "https://www.instagram.com/reel/DZvH52VTscb/",
     "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
-    "isVideo": true
+    "isVideo": true,
+    "views": 1038136,
+    "likes": 203051
   },
   "posts": [
     {
       "image": "/fallback/post-0.jpg",
       "url": "https://www.instagram.com/reel/DZvH52VTscb/",
       "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
-      "isVideo": true
+      "isVideo": true,
+      "views": 1038136,
+      "likes": 203051
     },
     {
       "image": "/fallback/post-1.jpg",
       "url": "https://www.instagram.com/reel/DZfYEPrzSkh/",
       "caption": "Eso no me lo esperaba 😳",
-      "isVideo": true
+      "isVideo": true,
+      "views": 241238,
+      "likes": 28052
     },
     {
       "image": "/fallback/post-2.jpg",
       "url": "https://www.instagram.com/reel/DZQB1NvTQ7f/",
       "caption": "Grande camarógrafo 🙈",
-      "isVideo": true
+      "isVideo": true,
+      "views": 509900,
+      "likes": 50280
     },
     {
       "image": "/fallback/post-3.jpg",
-      "url": "https://www.instagram.com/reel/DZu6vbATBAX/",
-      "caption": "No la bese no la beseeee 🥵",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZ1htdqzddH/",
+      "caption": "Sáquenme de aquí porfavor 😞",
+      "isVideo": true,
+      "views": 896,
+      "likes": 41
     },
     {
       "image": "/fallback/post-4.jpg",
-      "url": "https://www.instagram.com/reel/DZtCjmCzkJd/",
-      "caption": "El Congo con la realidad bien alterada; Ojito con el Congo 🇨🇩 👀",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZ1ZEYoT4dL/",
+      "caption": "Se viene Colombia 🇨🇴 vs Congo 🇨🇩 y queremos que hagas tu pronóstico.",
+      "isVideo": true,
+      "views": 785,
+      "likes": 34
     },
     {
       "image": "/fallback/post-5.jpg",
-      "url": "https://www.instagram.com/reel/DZrbgBCTy9y/",
-      "caption": "Nacen 5 hectáreas de yuca de la que atora 😮‍💨🥵",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZu6vbATBAX/",
+      "caption": "No la bese no la beseeee 🥵",
+      "isVideo": true,
+      "views": 1302,
+      "likes": 80
     },
     {
       "image": "/fallback/post-6.jpg",
-      "url": "https://www.instagram.com/reel/DZrWp-1TvNj/",
-      "caption": "Cristiano Ronaldo no duerme hoy, con el hat-trick de messi ❤️",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZtCjmCzkJd/",
+      "caption": "El Congo con la realidad bien alterada; Ojito con el Congo 🇨🇩 👀",
+      "isVideo": true,
+      "views": 12142,
+      "likes": 1143
     },
     {
       "image": "/fallback/post-7.jpg",
-      "url": "https://www.instagram.com/reel/DZkVP3Pz6gE/",
-      "caption": "*procede a destapar una costeñita para la calor 🙈",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZrbgBCTy9y/",
+      "caption": "Nacen 5 hectáreas de yuca de la que atora 😮‍💨🥵",
+      "isVideo": true,
+      "views": 100878,
+      "likes": 12273
     },
     {
       "image": "/fallback/post-8.jpg",
-      "url": "https://www.instagram.com/reel/DZdpMhQzQDm/",
-      "caption": "Ya basta freezeeer 😫😫😫",
-      "isVideo": true
+      "url": "https://www.instagram.com/reel/DZrWp-1TvNj/",
+      "caption": "Cristiano Ronaldo no duerme hoy, con el hat-trick de messi ❤️",
+      "isVideo": true,
+      "views": 6874,
+      "likes": 397
     }
   ]
 }

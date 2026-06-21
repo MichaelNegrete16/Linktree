@@ -82,6 +82,8 @@ for (let i = 0; i < edges.length; i++) {
     url: reel(n.shortcode),
     caption: (n.edge_media_to_caption?.edges?.[0]?.node?.text || "").split("\n")[0].slice(0, 90),
     isVideo: n.is_video,
+    views: n.video_view_count,
+    likes: n.edge_media_preview_like?.count,
   });
 }
 

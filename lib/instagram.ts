@@ -11,6 +11,8 @@ export type Post = {
   url: string;
   caption: string;
   isVideo: boolean;
+  views?: number;
+  likes?: number;
 };
 export type Stat = { value: string; label: string };
 export type Profile = {
@@ -27,7 +29,7 @@ export type Profile = {
   live: boolean;
 };
 
-function formatCount(n: number): string {
+export function formatCount(n: number): string {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1) + "M";
   if (n >= 1_000) return (n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 1) + "K";
   return String(n);
@@ -97,6 +99,8 @@ type IgUser = {
         shortcode: string;
         display_url: string;
         is_video: boolean;
+        video_view_count?: number;
+        edge_media_preview_like?: { count: number };
         edge_media_to_caption?: { edges: { node: { text: string } }[] };
       };
     }[];
@@ -117,6 +121,8 @@ function normalize(user: IgUser): Profile {
       .split("\n")[0]
       .slice(0, 90),
     isVideo: e.node.is_video,
+    views: e.node.video_view_count,
+    likes: e.node.edge_media_preview_like?.count,
   }));
 
   const bioLinks = (user.bio_links || [])

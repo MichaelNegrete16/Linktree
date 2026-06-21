@@ -1,5 +1,5 @@
 import Background from "@/components/Background";
-import { getProfile } from "@/lib/instagram";
+import { getProfile, formatCount } from "@/lib/instagram";
 import { profileConfig } from "@/lib/config";
 
 export const revalidate = 3600;
@@ -129,6 +129,32 @@ export default async function Home() {
                       {p.featured.caption}
                     </h3>
                   )}
+                  {(p.featured.views != null || p.featured.likes != null) && (
+                    <div className="flex items-center gap-4 mt-1">
+                      {p.featured.views != null && (
+                        <span className="flex items-center gap-1.5 font-mono text-body-md text-primary">
+                          <span
+                            className="material-symbols-outlined text-[18px] gold-text"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            play_arrow
+                          </span>
+                          {formatCount(p.featured.views)}
+                        </span>
+                      )}
+                      {p.featured.likes != null && (
+                        <span className="flex items-center gap-1.5 font-mono text-body-md text-on-surface-variant">
+                          <span
+                            className="material-symbols-outlined text-[16px]"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            favorite
+                          </span>
+                          {formatCount(p.featured.likes)}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="absolute top-4 right-4 bg-background/50 backdrop-blur-md rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="material-symbols-outlined text-primary">
@@ -162,10 +188,21 @@ export default async function Home() {
                     loading="lazy"
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                   <span className="material-symbols-outlined absolute top-2 right-2 text-primary text-[18px] drop-shadow">
                     play_circle
                   </span>
+                  {post.views != null && (
+                    <span className="absolute bottom-2 left-2 flex items-center gap-1 font-mono text-[11px] text-primary [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
+                      <span
+                        className="material-symbols-outlined text-[14px]"
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                      >
+                        play_arrow
+                      </span>
+                      {formatCount(post.views)}
+                    </span>
+                  )}
                 </a>
               ))}
             </div>
