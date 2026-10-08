@@ -14,6 +14,16 @@ export const profileConfig = {
     icon: "mail",
   },
 
+  // Reels con colaboración: shortcode del reel (lo que va después de /reel/) + cuenta aliada.
+  // Instagram no expone las colabs por la API pública, así que se mantiene a mano.
+  collabs: [{ shortcode: "DZvH52VTscb", partner: "ae_topsport" }] as {
+    shortcode: string;
+    partner: string;
+  }[],
+
+  // Textos de la cinta que se desplaza (tomados de la bio)
+  marquee: ["Humor con sabor costeño", "Cartagena vibes", "Reels", "Cartagena de Indias", "Costa Caribe"],
+
   // 4ta tarjeta de stats (IG da seguidores/publicaciones/seguidos)
   customStat: { value: "Cartagena", label: "Ciudad" },
 

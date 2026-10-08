@@ -47,9 +47,44 @@ async function dl(url, file) {
   fs.writeFileSync(file, Buffer.from(await r.arrayBuffer()));
 }
 
+// Convierte la salida de apify/instagram-profile-scraper al formato de la API web de IG
+function fromApify(a) {
+  return {
+    username: a.username,
+    full_name: a.fullName || "",
+    biography: a.biography || "",
+    is_verified: !!a.verified,
+    category_name: a.businessCategoryName || "",
+    profile_pic_url_hd: a.profilePicUrlHD || a.profilePicUrl,
+    edge_followed_by: { count: a.followersCount },
+    edge_follow: { count: a.followsCount },
+    bio_links: (a.externalUrls || []).map((l) => ({ url: l.url, title: l.title })),
+    edge_owner_to_timeline_media: {
+      count: a.postsCount,
+      // Apify pone primero los posts fijados: ordenar por fecha para que "últimos" sea real
+      edges: [...(a.latestPosts || [])]
+        .sort((x, y) => new Date(y.timestamp) - new Date(x.timestamp))
+        .map((p) => ({
+        node: {
+          shortcode: p.shortCode,
+          display_url: p.displayUrl,
+          is_video: p.type === "Video",
+          video_view_count: p.videoViewCount ?? p.videoPlayCount,
+          edge_media_preview_like: { count: p.likesCount },
+          edge_media_to_caption: { edges: [{ node: { text: p.caption || "" } }] },
+        },
+      })),
+    },
+  };
+}
+
 let u;
 const localJson = process.env.IG_JSON; // opcional: ruta a un JSON ya descargado
-if (localJson) {
+const apifyJson = process.env.APIFY_JSON; // opcional: salida del actor de Apify
+if (apifyJson) {
+  u = fromApify(JSON.parse(fs.readFileSync(apifyJson, "utf8"))[0]);
+  console.log("(usando JSON de Apify:", apifyJson + ")");
+} else if (localJson) {
   u = JSON.parse(fs.readFileSync(localJson, "utf8")).data.user;
   console.log("(usando JSON local:", localJson + ")");
 } else {
@@ -67,7 +102,7 @@ if (localJson) {
 const followers = u.edge_followed_by?.count ?? 0;
 const following = u.edge_follow?.count ?? 0;
 const postsCount = u.edge_owner_to_timeline_media?.count ?? 0;
-const edges = (u.edge_owner_to_timeline_media?.edges ?? []).slice(0, 9);
+const edges = (u.edge_owner_to_timeline_media?.edges ?? []).slice(0, 12);
 
 // descargar foto de perfil (+ favicon) y thumbnails
 await dl(u.profile_pic_url_hd || u.profile_pic_url, path.join(fallbackDir, "profile.jpg"));

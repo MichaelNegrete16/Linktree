@@ -1,14 +1,16 @@
-// Fondo fijo: atardecer tropical a pantalla completa + velo para legibilidad.
+import Fireflies from "./Fireflies";
+
+// Fondo fijo: atardecer tropical vivo (Ken Burns + parallax + luz del sol + luciérnagas).
 export default function Background() {
   return (
-    <div className="fixed inset-0 -z-10">
-      {/* imagen */}
-      <div className="absolute inset-0 bg-[url('/bg.png')] bg-cover bg-center bg-no-repeat" />
-      {/* velo vertical: un poco más oscuro arriba (nav) y abajo (footer/CTA),
-          claro en el centro para que se vea el paisaje */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/35 to-background/85" />
-      {/* viñeta suave para enfocar la columna de contenido */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_42%,transparent_0%,rgba(10,10,10,0.45)_100%)]" />
+    <div className="fixed inset-0 -z-10 overflow-hidden bg-background">
+      <div className="bg-sunset" />
+      <div className="sun-glow" />
+      {/* velo vertical para legibilidad: más oscuro arriba (nav) y abajo (CTA) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/40 to-background/90" />
+      {/* viñeta para enfocar el contenido */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_42%,transparent_0%,rgba(10,10,10,0.5)_100%)]" />
+      <Fireflies />
     </div>
   );
 }

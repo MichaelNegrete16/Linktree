@@ -13,6 +13,7 @@ export type Post = {
   isVideo: boolean;
   views?: number;
   likes?: number;
+  partner?: string;
 };
 export type Stat = { value: string; label: string };
 export type Profile = {
@@ -114,7 +115,7 @@ function normalize(user: IgUser): Profile {
   const postsCount = user.edge_owner_to_timeline_media?.count ?? 0;
 
   const media = user.edge_owner_to_timeline_media?.edges ?? [];
-  const posts: Post[] = media.slice(0, 9).map((e) => ({
+  const posts: Post[] = media.slice(0, 12).map((e) => ({
     image: proxy(e.node.display_url),
     url: reelUrl(e.node.shortcode),
     caption: (e.node.edge_media_to_caption?.edges?.[0]?.node?.text || "")

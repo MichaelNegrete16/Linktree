@@ -1,4 +1,11 @@
 import Background from "@/components/Background";
+import CountUp from "@/components/CountUp";
+import FloatCta from "@/components/FloatCta";
+import Loader from "@/components/Loader";
+import Marquee from "@/components/Marquee";
+import ReelsRail from "@/components/ReelsRail";
+import Reveal from "@/components/Reveal";
+import Spot from "@/components/Spot";
 import { getProfile, formatCount } from "@/lib/instagram";
 import { profileConfig } from "@/lib/config";
 
@@ -6,236 +13,268 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const p = await getProfile();
-  const icon = (platform: string) =>
-    profileConfig.icons[platform] || profileConfig.icons.default;
+  const icon = (platform: string) => profileConfig.icons[platform] || profileConfig.icons.default;
+  const collabPosts = profileConfig.collabs.flatMap((c) => {
+    const post = p.posts.find((x) => x.url.includes(c.shortcode));
+    return post ? [{ ...post, partner: c.partner }] : [];
+  });
+  const nameWords = p.name.split(" ");
+  const bioLines = p.bio.split("\n").map((l) => l.trim()).filter(Boolean);
 
   return (
     <>
+      <Loader />
       <Background />
 
-      {/* Top nav */}
-      <nav className="sticky top-0 z-50 w-full max-w-[680px] mx-auto px-gutter">
-        <div className="glass-card border-x-0 border-t-0 flex justify-center items-center py-4">
-          <span className="font-display font-extrabold text-headline-sm tracking-tighter text-primary uppercase">
+      {/* ---------- Nav flotante ---------- */}
+      <header className="fixed inset-x-0 top-0 z-50 px-[var(--pad)] pt-4 hero-fade" style={{ ["--d" as string]: "2.6s" }}>
+        <nav className="glass mx-auto flex w-full max-w-[1280px] items-center justify-between rounded-full px-5 py-3 md:px-7">
+          <span className="font-display text-sm font-extrabold uppercase tracking-[0.3em] text-primary md:text-base">
             {profileConfig.brandLabel}
           </span>
-        </div>
-      </nav>
-
-      <main className="w-full max-w-[680px] mx-auto px-gutter pt-12 pb-10 flex flex-col gap-10 md:gap-12 relative z-10">
-        {/* Header */}
-        <header className="flex flex-col items-center text-center gap-6">
-          <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full p-1 border border-white/20 glass-card">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={p.avatar}
-              alt={p.name}
-              className="w-full h-full object-cover rounded-full"
-            />
-            {p.verified && (
-              <div className="absolute bottom-1 right-1 bg-background rounded-full p-1">
-                <span
-                  className="material-symbols-outlined text-[24px] gold-text"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  verified
-                </span>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col gap-3 items-center">
-            <h1 className="font-display font-bold text-display-mobile md:text-display-lg text-primary tracking-tighter [text-shadow:0_2px_18px_rgba(0,0,0,0.7)]">
-              {p.name}
-            </h1>
-            <p className="font-mono text-label-caps text-secondary tracking-widest accent-glow uppercase">
-              {p.tagline}
-            </p>
-            {p.bio && (
-              <p className="font-body text-body-md text-on-surface/90 max-w-md whitespace-pre-line [text-shadow:0_1px_10px_rgba(0,0,0,0.85)]">
-                {p.bio}
-              </p>
-            )}
-          </div>
-        </header>
-
-        {/* Stats */}
-        <section className="grid grid-cols-2 gap-4">
-          {p.stats.map((s) => (
-            <div
-              key={s.label}
-              className="glass-card rounded-xl p-6 flex flex-col items-center text-center"
-            >
-              <span className="font-mono text-headline-md text-primary mb-1 accent-glow">
-                {s.value}
-              </span>
-              <span className="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">
-                {s.label}
-              </span>
-            </div>
-          ))}
-        </section>
-
-        {/* Social links */}
-        <section className="flex flex-col gap-3">
-          {p.socials.map((s) => (
-            <a
-              key={s.platform + s.url}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card glass-hover shimmer rounded-full py-4 px-6 flex items-center justify-between w-full group"
-            >
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-outlined text-primary group-hover:scale-110 transition-transform duration-300">
-                  {icon(s.platform)}
-                </span>
-                <span className="font-display font-semibold text-body-lg text-primary">
-                  {s.label}
-                </span>
-              </div>
-              <span className="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors duration-300">
-                arrow_forward
-              </span>
-            </a>
-          ))}
-        </section>
-
-        {/* Featured */}
-        {p.featured && (
-          <section className="flex flex-col gap-4">
-            <h2 className="font-mono text-label-caps text-on-surface-variant uppercase tracking-widest pl-2">
-              Última publicación
-            </h2>
-            <a
-              href={p.featured.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card glass-hover gold-accent rounded-xl overflow-hidden group cursor-pointer block"
-            >
-              <div className="relative w-full h-64 md:h-80 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={p.featured.image}
-                  alt={p.featured.caption || "Última publicación"}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-80" />
-                <div className="absolute bottom-0 left-0 p-6 flex flex-col gap-2">
-                  <span className="font-mono text-[10px] gold-text uppercase tracking-widest border border-gold/40 px-2 py-1 rounded w-max">
-                    Destacado
-                  </span>
-                  {p.featured.caption && (
-                    <h3 className="font-display font-semibold text-headline-sm text-primary max-w-md line-clamp-2">
-                      {p.featured.caption}
-                    </h3>
-                  )}
-                  {(p.featured.views != null || p.featured.likes != null) && (
-                    <div className="flex items-center gap-4 mt-1">
-                      {p.featured.views != null && (
-                        <span className="flex items-center gap-1.5 font-mono text-body-md text-primary">
-                          <span
-                            className="material-symbols-outlined text-[18px] gold-text"
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                          >
-                            play_arrow
-                          </span>
-                          {formatCount(p.featured.views)}
-                        </span>
-                      )}
-                      {p.featured.likes != null && (
-                        <span className="flex items-center gap-1.5 font-mono text-body-md text-on-surface-variant">
-                          <span
-                            className="material-symbols-outlined text-[16px]"
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                          >
-                            favorite
-                          </span>
-                          {formatCount(p.featured.likes)}
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </div>
-                <div className="absolute top-4 right-4 bg-background/50 backdrop-blur-md rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="material-symbols-outlined text-primary">
-                    open_in_new
-                  </span>
-                </div>
-              </div>
-            </a>
-          </section>
-        )}
-
-        {/* Recent posts grid */}
-        {p.posts.length > 1 && (
-          <section className="flex flex-col gap-4">
-            <h2 className="font-mono text-label-caps text-on-surface-variant uppercase tracking-widest pl-2">
-              Reels recientes
-            </h2>
-            <div className="grid grid-cols-3 gap-3">
-              {p.posts.map((post, i) => (
-                <a
-                  key={i}
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative aspect-[9/16] rounded-lg overflow-hidden glass-card group"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={post.image}
-                    alt={post.caption || `Reel ${i + 1}`}
-                    loading="lazy"
-                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                  <span className="material-symbols-outlined absolute top-2 right-2 text-primary text-[18px] drop-shadow">
-                    play_circle
-                  </span>
-                  {post.views != null && (
-                    <span className="absolute bottom-2 left-2 flex items-center gap-1 font-mono text-[11px] text-primary [text-shadow:0_1px_4px_rgba(0,0,0,0.9)]">
-                      <span
-                        className="material-symbols-outlined text-[14px]"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        play_arrow
-                      </span>
-                      {formatCount(post.views)}
-                    </span>
-                  )}
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* CTA */}
-        <section className="pt-2">
           <a
-            href={profileConfig.cta.url}
+            href={`https://www.instagram.com/${p.username}/`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-primary text-on-primary font-display font-semibold text-body-lg py-5 rounded-full hover:bg-white/90 transition-all duration-300 transform hover:scale-[1.02] shadow-[0_0_40px_rgba(255,154,60,0.18)] flex items-center justify-center gap-3 relative overflow-hidden group border border-gold/50"
+            className="flex items-center gap-2 rounded-full border border-gold/50 px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-gold transition-all duration-500 hover:bg-gold hover:text-on-primary"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-            <span className="material-symbols-outlined">{profileConfig.cta.icon}</span>
-            {profileConfig.cta.label}
+            <span className="material-symbols-outlined text-[16px]">photo_camera</span>
+            Seguir
           </a>
-        </section>
+        </nav>
+      </header>
+
+      <main className="relative z-10 mx-auto w-full max-w-[1280px] px-[var(--pad)] pb-28 pt-28 md:pt-32">
+        <div className="grid gap-14 lg:grid-cols-[minmax(360px,460px)_1fr] lg:gap-16">
+          {/* ================= Columna izquierda: perfil ================= */}
+          <div className="flex flex-col gap-10 [@media(min-width:1024px)_and_(min-height:900px)]:sticky [@media(min-width:1024px)_and_(min-height:900px)]:top-24 lg:self-start">
+            <header className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
+              <div className="hero-fade relative" style={{ ["--d" as string]: "2.1s" }}>
+                <div className="ring h-36 w-36 md:h-44 md:w-44">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.avatar} alt={p.name} className="h-full w-full rounded-full border-4 border-background object-cover" />
+                </div>
+                {p.verified && (
+                  <div className="absolute bottom-1 right-1 rounded-full bg-background p-1">
+                    <span className="material-symbols-outlined text-[24px] text-gold" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      verified
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col items-center gap-4 lg:items-start">
+                <p className="eyebrow hero-fade" style={{ ["--d" as string]: "2.2s" }}>
+                  {p.tagline}
+                </p>
+                <h1 className="h-name text-primary [text-shadow:0_2px_30px_rgba(0,0,0,0.6)]">
+                  {nameWords.map((w, i) => {
+                    const last = i === nameWords.length - 1 && nameWords.length > 1;
+                    return (
+                      <span key={i} className="block lg:inline-block lg:mr-[0.2em]">
+                        <span className={`hw ${last ? "accent" : ""}`} style={{ ["--i" as string]: i }}>
+                          {w}
+                        </span>
+                      </span>
+                    );
+                  })}
+                </h1>
+                {bioLines.length > 0 && (
+                  <ul className="mt-1 flex max-w-md flex-col gap-1.5 text-body-md text-on-surface/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.9)]">
+                    {bioLines.map((l, i) => (
+                      <li key={i} className="hero-fade" style={{ ["--d" as string]: `${2.7 + i * 0.12}s` }}>
+                        {l}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </header>
+
+            {/* Stats */}
+            <Reveal>
+              <section className="grid grid-cols-2 gap-3">
+                {p.stats.map((s) => (
+                  <Spot key={s.label} className="glass rounded-2xl p-5">
+                    <span className="block font-display font-bold leading-none text-primary text-[1.55rem] min-[400px]:text-3xl md:text-[2rem]">
+                      <CountUp value={s.value} />
+                    </span>
+                    <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">
+                      {s.label}
+                    </span>
+                  </Spot>
+                ))}
+              </section>
+            </Reveal>
+
+            {/* Enlaces */}
+            <section className="flex flex-col gap-3">
+              {p.socials.map((s, i) => (
+                <Reveal key={s.platform + s.url} delay={i * 90}>
+                  <Spot href={s.url} className="glass group flex w-full items-center justify-between rounded-full py-3 pl-3 pr-6">
+                    <div className="flex items-center gap-4">
+                      <span className="linkicon">
+                        <span className="material-symbols-outlined text-[22px]">{icon(s.platform)}</span>
+                      </span>
+                      <span className="font-display text-lg font-semibold text-primary">{s.label}</span>
+                    </div>
+                    <span className="material-symbols-outlined linkarrow text-on-surface-variant">arrow_forward</span>
+                  </Spot>
+                </Reveal>
+              ))}
+            </section>
+          </div>
+
+          {/* ================= Columna derecha: contenido ================= */}
+          <div className="flex min-w-0 flex-col gap-14">
+            {/* Destacado */}
+            {p.featured && (
+              <Reveal>
+                <section className="flex flex-col gap-5">
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <span className="eyebrow mb-3">Última publicación</span>
+                      <h2 className="h-sec">
+                        Lo más <span className="accent">reciente</span>
+                      </h2>
+                    </div>
+                  </div>
+                  <div className="glowframe">
+                    <a
+                      href={p.featured.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative block overflow-hidden rounded-[21px] bg-surface"
+                    >
+                      <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/11]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={p.featured.image}
+                          alt={p.featured.caption || "Última publicación"}
+                          className="h-full w-full object-cover transition-transform duration-[1500ms] ease-lux group-hover:scale-[1.06]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                        <span className="absolute left-5 top-5 rounded-full border border-gold/50 bg-background/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-gold backdrop-blur-md">
+                          Destacado
+                        </span>
+                        <span className="absolute right-5 top-5 grid h-14 w-14 place-items-center rounded-full border border-white/30 bg-background/40 backdrop-blur-md transition-all duration-700 ease-lux group-hover:scale-110 group-hover:border-transparent group-hover:bg-gold group-hover:text-on-primary">
+                          <span className="material-symbols-outlined text-[30px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                            play_arrow
+                          </span>
+                        </span>
+                        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 md:p-8">
+                          {p.featured.caption && (
+                            <h3 className="line-clamp-2 max-w-xl font-display text-2xl font-semibold tracking-tight text-primary md:text-3xl">
+                              {p.featured.caption}
+                            </h3>
+                          )}
+                          <div className="flex items-center gap-5 font-mono text-sm">
+                            {p.featured.views != null && (
+                              <span className="flex items-center gap-1.5 text-gold-hi">
+                                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                  play_arrow
+                                </span>
+                                {formatCount(p.featured.views)}
+                              </span>
+                            )}
+                            {p.featured.likes != null && (
+                              <span className="flex items-center gap-1.5 text-on-surface-variant">
+                                <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                  favorite
+                                </span>
+                                {formatCount(p.featured.likes)}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </section>
+              </Reveal>
+            )}
+
+            {/* Reels */}
+            {p.posts.length > 1 && (
+              <Reveal>
+                <section className="flex flex-col">
+                  <div className="mb-5">
+                    <span className="eyebrow mb-3">Reels</span>
+                    <h2 className="h-sec">
+                      Mira los <span className="accent">últimos</span>
+                    </h2>
+                  </div>
+                  <ReelsRail posts={p.posts} />
+                </section>
+              </Reveal>
+            )}
+
+            {/* Colaboraciones */}
+            {collabPosts.length > 0 && (
+              <Reveal>
+                <section className="flex flex-col">
+                  <div className="mb-5">
+                    <span className="eyebrow mb-3">Colaboraciones</span>
+                    <h2 className="h-sec">
+                      Marcas y páginas que <span className="accent">ya confían</span>
+                    </h2>
+                  </div>
+                  <ReelsRail posts={collabPosts} />
+                  <a
+                    href={profileConfig.cta.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 self-start font-mono text-[12px] uppercase tracking-[0.18em] text-gold transition-colors hover:text-gold-hi"
+                  >
+                    ¿Quieres colaborar con el Mono? Escríbele
+                    <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+                  </a>
+                </section>
+              </Reveal>
+            )}
+
+            {/* CTA */}
+            <Reveal>
+              <section id="cta-main" className="glass relative overflow-hidden rounded-[28px] p-8 text-center md:p-12">
+                <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-secondary/25 blur-3xl" />
+                <span className="eyebrow mb-5 justify-center">Hablemos</span>
+                <h2 className="h-sec mx-auto max-w-md !text-[clamp(1.8rem,3.4vw,2.8rem)]">
+                  ¿Una colaboración con <span className="accent">sabor costeño</span>?
+                </h2>
+                <p className="mx-auto mt-4 max-w-sm text-body-md text-on-surface-variant">
+                  Escríbeme directo por Instagram y armamos algo bien chimba.
+                </p>
+                <a
+                  href={profileConfig.cta.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-cta mx-auto mt-8 max-w-sm"
+                >
+                  <span className="material-symbols-outlined">{profileConfig.cta.icon}</span>
+                  {profileConfig.cta.label}
+                </a>
+              </section>
+            </Reveal>
+          </div>
+        </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full max-w-[680px] mx-auto px-gutter pt-2 pb-12 flex flex-col items-center gap-4 text-center relative z-10">
+      <Marquee items={profileConfig.marquee} />
+
+      {/* ---------- Footer ---------- */}
+      <footer className="relative z-10 flex flex-col items-center gap-5 px-[var(--pad)] pb-28 pt-14 text-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/elpanajackson.png"
           alt='By "ElPanaJackson"'
-          className="w-48 md:w-56 h-auto opacity-90 drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-opacity duration-300 hover:opacity-100"
+          className="h-auto w-48 opacity-90 drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)] transition-opacity duration-300 hover:opacity-100 md:w-56"
         />
-        <p className="font-mono text-label-caps text-on-surface-variant/70 uppercase">
-          © {new Date().getFullYear()} {profileConfig.brandLabel}
+        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-on-surface-variant/70">
+          © {new Date().getFullYear()} {profileConfig.brandLabel} · Hecho en {p.username === "elmonocuc0" ? "Cartagena" : "Colombia"}
         </p>
       </footer>
+
+      <FloatCta href={profileConfig.cta.url} label={profileConfig.cta.label} icon={profileConfig.cta.icon} />
     </>
   );
 }
