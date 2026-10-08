@@ -14,13 +14,6 @@ export const profileConfig = {
     icon: "mail",
   },
 
-  // Reels con colaboración: shortcode del reel (lo que va después de /reel/) + cuenta aliada.
-  // Instagram no expone las colabs por la API pública, así que se mantiene a mano.
-  collabs: [{ shortcode: "DZvH52VTscb", partner: "ae_topsport" }] as {
-    shortcode: string;
-    partner: string;
-  }[],
-
   // Textos de la cinta que se desplaza (tomados de la bio)
   marquee: ["Humor con sabor costeño", "Cartagena vibes", "Reels", "Cartagena de Indias", "Costa Caribe"],
 
@@ -29,6 +22,11 @@ export const profileConfig = {
 
   // Enlaces extra a fusionar además de Instagram + los bio_links de IG
   extraLinks: [
+    {
+      platform: "tiktok",
+      label: "TikTok",
+      url: "https://www.tiktok.com/@elmonocuc0",
+    },
     {
       platform: "facebook",
       label: "Facebook",

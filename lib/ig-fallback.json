@@ -35,6 +35,11 @@
       "url": "https://www.elmonocuco.com/"
     },
     {
+      "platform": "tiktok",
+      "label": "TikTok",
+      "url": "https://www.tiktok.com/@elmonocuc0"
+    },
+    {
       "platform": "facebook",
       "label": "Facebook",
       "url": "https://www.facebook.com/Elmonocuco01/"
@@ -45,6 +50,7 @@
     "url": "https://www.instagram.com/reel/DeNFHoNzJJZ/",
     "caption": "Si sabe contar no cuente conmigo 💀",
     "isVideo": true,
+    "date": "2026-10-07T19:12:39.000Z",
     "views": 1096,
     "likes": 51
   },
@@ -54,6 +60,7 @@
       "url": "https://www.instagram.com/reel/DeNFHoNzJJZ/",
       "caption": "Si sabe contar no cuente conmigo 💀",
       "isVideo": true,
+      "date": "2026-10-07T19:12:39.000Z",
       "views": 1096,
       "likes": 51
     },
@@ -62,6 +69,7 @@
       "url": "https://www.instagram.com/reel/DeL5nDQzAH2/",
       "caption": "Son lágrimas de hombre okey? 🥺😖",
       "isVideo": true,
+      "date": "2026-10-07T08:13:36.000Z",
       "views": 403,
       "likes": 71
     },
@@ -70,6 +78,7 @@
       "url": "https://www.instagram.com/reel/DeL3W2-zp2n/",
       "caption": "¿Perderme el último partido Messi por esa funeraria?🙄",
       "isVideo": true,
+      "date": "2026-10-07T07:55:03.000Z",
       "views": 1748,
       "likes": 97
     },
@@ -78,6 +87,7 @@
       "url": "https://www.instagram.com/reel/DeLpY7Szpv5/",
       "caption": "Se pasaron de verg* con ese anuncio 🙄",
       "isVideo": true,
+      "date": "2026-10-07T05:50:58.000Z",
       "views": 183,
       "likes": 28
     },
@@ -86,6 +96,7 @@
       "url": "https://www.instagram.com/reel/DeKLR30T8u-/",
       "caption": "Mucho anuncio de octubre, ¿noviembre dónde estás?",
       "isVideo": true,
+      "date": "2026-10-06T16:09:10.000Z",
       "views": 600,
       "likes": 61
     },
@@ -94,6 +105,7 @@
       "url": "https://www.instagram.com/reel/DeIZgG-zGyz/",
       "caption": "Bolívares enserio? 😳😳😳",
       "isVideo": true,
+      "date": "2026-10-05T23:36:48.000Z",
       "views": 1160,
       "likes": 78
     },
@@ -102,6 +114,7 @@
       "url": "https://www.instagram.com/reel/DeIQuzpzzxj/",
       "caption": "Creo que me quedo un ratico 🥱",
       "isVideo": true,
+      "date": "2026-10-05T22:18:27.000Z",
       "views": 2149,
       "likes": 201
     },
@@ -110,6 +123,7 @@
       "url": "https://www.instagram.com/reel/DeIHe2eTVVj/",
       "caption": "Yo conozco lo que tengo 🥱",
       "isVideo": true,
+      "date": "2026-10-05T20:57:34.000Z",
       "views": 56856,
       "likes": 3945
     },
@@ -118,6 +132,7 @@
       "url": "https://www.instagram.com/reel/DeHiv-mzcKU/",
       "caption": "Uy como así 😳",
       "isVideo": true,
+      "date": "2026-10-05T15:36:02.000Z",
       "views": 1172,
       "likes": 67
     },
@@ -126,6 +141,7 @@
       "url": "https://www.instagram.com/reel/DcNiN_IzoKd/",
       "caption": "Necesita ayuda pero psiquiátrica 😵‍💫",
       "isVideo": true,
+      "date": "2026-08-19T06:25:40.000Z",
       "views": 97268,
       "likes": 2027
     },
@@ -134,6 +150,7 @@
       "url": "https://www.instagram.com/reel/DZvH52VTscb/",
       "caption": "El cucho juega con el corazón de toda Colombia 🥹❤️",
       "isVideo": true,
+      "date": "2026-06-18T17:54:57.000Z",
       "views": 1942704,
       "likes": 417574
     },
@@ -142,6 +159,7 @@
       "url": "https://www.instagram.com/reel/DZQB1NvTQ7f/",
       "caption": "Grande camarógrafo 🙈",
       "isVideo": true,
+      "date": "2026-06-06T16:04:43.000Z",
       "views": 591043,
       "likes": 60150
     }

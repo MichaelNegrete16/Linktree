@@ -6,18 +6,45 @@ import Marquee from "@/components/Marquee";
 import ReelsRail from "@/components/ReelsRail";
 import Reveal from "@/components/Reveal";
 import Spot from "@/components/Spot";
+import collabsData from "@/lib/collabs.json";
+import igRecentData from "@/lib/ig-recent.json";
+import tiktokData from "@/lib/tiktok.json";
 import { getProfile, formatCount } from "@/lib/instagram";
+import type { Post } from "@/lib/instagram";
 import { profileConfig } from "@/lib/config";
 
 export const revalidate = 3600;
 
+
 export default async function Home() {
   const p = await getProfile();
   const icon = (platform: string) => profileConfig.icons[platform] || profileConfig.icons.default;
-  const collabPosts = profileConfig.collabs.flatMap((c) => {
-    const post = p.posts.find((x) => x.url.includes(c.shortcode));
-    return post ? [{ ...post, partner: c.partner }] : [];
-  });
+  // Generado con `scripts/refresh-collabs.mjs` (reels con coautor), del más nuevo al más viejo
+  const collabPosts = collabsData as Post[];
+  // Métricas: promedio de vistas y reacciones (likes) de los últimos 5 videos de cada red con al menos
+  // 48 h de vida (los recién subidos aún no acumulan nada). Listas ordenadas por fecha, nuevo primero.
+  const MATURE_MS = 48 * 3600 * 1000;
+  type Sample = { views?: number; likes?: number; date?: string };
+  const last5 = (list: Sample[]) =>
+    list
+      .filter((x) => x.views != null && (!x.date || Date.now() - new Date(x.date).getTime() >= MATURE_MS))
+      .slice(0, 5);
+  const avgOf = (l: Sample[], k: "views" | "likes") =>
+    l.length ? Math.round(l.reduce((s, x) => s + (x[k] ?? 0), 0) / l.length) : 0;
+  const igRecent = last5(igRecentData as Sample[]);
+  const ttRecent = last5(tiktokData.posts as Sample[]);
+  const allRecent = [...igRecent, ...ttRecent];
+  const networks = [
+    { name: "Instagram", icon: "photo_camera", views: avgOf(igRecent, "views"), likes: avgOf(igRecent, "likes"), url: `https://www.instagram.com/${p.username}/` },
+    { name: "TikTok", icon: "play_circle", views: avgOf(ttRecent, "views"), likes: avgOf(ttRecent, "likes"), url: tiktokData.url },
+  ];
+  const metrics =
+    allRecent.length > 0
+      ? [
+          { value: formatCount(avgOf(allRecent, "views")), label: "Vistas promedio" },
+          { value: formatCount(avgOf(allRecent, "likes")), label: "Reacciones promedio" },
+        ]
+      : [];
   const nameWords = p.name.split(" ");
   const bioLines = p.bio.split("\n").map((l) => l.trim()).filter(Boolean);
 
@@ -205,6 +232,58 @@ export default async function Home() {
                     </h2>
                   </div>
                   <ReelsRail posts={p.posts} />
+                </section>
+              </Reveal>
+            )}
+
+            {/* Métricas */}
+            {metrics.length > 0 && (
+              <Reveal>
+                <section className="flex flex-col">
+                  <div className="mb-5">
+                    <span className="eyebrow mb-3">Alcance</span>
+                    <h2 className="h-sec">
+                      La gente que <span className="accent">le llega</span>
+                    </h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {metrics.map((m) => (
+                      <Spot key={m.label} className="glass rounded-2xl p-5">
+                        <span className="block font-display font-bold leading-none text-primary text-[1.55rem] min-[400px]:text-3xl">
+                          <CountUp value={m.value} />
+                        </span>
+                        <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">
+                          {m.label}
+                        </span>
+                      </Spot>
+                    ))}
+                  </div>
+                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                    {networks.map((n) => (
+                      <Spot key={n.name} href={n.url} className="glass rounded-2xl p-4">
+                        <div className="flex items-center gap-3">
+                          <span className="linkicon">
+                            <span className="material-symbols-outlined text-[22px]">{n.icon}</span>
+                          </span>
+                          <span className="font-display text-lg font-semibold text-primary">{n.name}</span>
+                        </div>
+                        <div className="mt-4 grid grid-cols-2 gap-3">
+                          {[
+                            { v: n.views, l: "Vistas prom." },
+                            { v: n.likes, l: "Reacciones prom." },
+                          ].map((x) => (
+                            <div key={x.l}>
+                              <span className="block font-display text-2xl font-bold text-primary">{formatCount(x.v)}</span>
+                              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-gold-hi/80">{x.l}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </Spot>
+                    ))}
+                  </div>
+                  <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-on-surface-variant/70">
+                    Datos públicos · promedio de los últimos 5 videos de cada red
+                  </p>
                 </section>
               </Reveal>
             )}

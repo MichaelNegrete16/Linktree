@@ -14,6 +14,8 @@ export type Post = {
   views?: number;
   likes?: number;
   partner?: string;
+  platform?: "instagram" | "tiktok";
+  date?: string;
 };
 export type Stat = { value: string; label: string };
 export type Profile = {

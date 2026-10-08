@@ -7,6 +7,7 @@ const USERNAME = "elmonocuc0";
 const IG_APP_ID = "936619743392459";
 const CUSTOM_STAT = { value: "Cartagena", label: "Ciudad" };
 const EXTRA_LINKS = [
+  { platform: "tiktok", label: "TikTok", url: "https://www.tiktok.com/@elmonocuc0" },
   { platform: "facebook", label: "Facebook", url: "https://www.facebook.com/Elmonocuco01/" },
 ];
 
@@ -67,6 +68,7 @@ function fromApify(a) {
         .map((p) => ({
         node: {
           shortcode: p.shortCode,
+          taken_at_timestamp: Math.floor(new Date(p.timestamp).getTime() / 1000),
           display_url: p.displayUrl,
           is_video: p.type === "Video",
           video_view_count: p.videoViewCount ?? p.videoPlayCount,
@@ -117,6 +119,7 @@ for (let i = 0; i < edges.length; i++) {
     url: reel(n.shortcode),
     caption: (n.edge_media_to_caption?.edges?.[0]?.node?.text || "").split("\n")[0].slice(0, 90),
     isVideo: n.is_video,
+    date: n.taken_at_timestamp ? new Date(n.taken_at_timestamp * 1000).toISOString() : undefined,
     views: n.video_view_count,
     likes: n.edge_media_preview_like?.count,
   });

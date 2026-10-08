@@ -39,9 +39,9 @@ export default function ReelsRail({ posts }: { posts: Post[] }) {
             <span className="material-symbols-outlined absolute right-3 top-3 text-[22px] text-primary drop-shadow">
               play_circle
             </span>
-            {post.partner ? (
+            {post.platform ? (
               <span className="absolute left-3 top-3 max-w-[70%] truncate rounded-full bg-gold px-3 py-1.5 font-display text-[12px] font-extrabold tracking-wide text-on-primary shadow-lg">
-                @{post.partner}
+                {post.partner ? `@${post.partner}` : "Colab"}
               </span>
             ) : (
               <span className="absolute left-3 top-3 font-mono text-[10px] tracking-widest text-gold">
@@ -49,9 +49,16 @@ export default function ReelsRail({ posts }: { posts: Post[] }) {
               </span>
             )}
             <div className="absolute inset-x-0 bottom-0 p-3">
-              {post.partner && (
+              {post.platform && (
                 <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-hi">
-                  Colab con <span className="font-bold text-primary">@{post.partner}</span>
+                  {post.partner ? (
+                    <>
+                      Colab con <span className="font-bold text-primary">@{post.partner}</span>
+                    </>
+                  ) : (
+                    "Colaboración"
+                  )}
+                  {post.platform === "tiktok" ? " · TikTok" : post.platform === "instagram" ? " · Instagram" : ""}
                 </p>
               )}
               {post.caption && (
