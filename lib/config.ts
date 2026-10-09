@@ -13,7 +13,7 @@ export const profileConfig = {
   marquee: ["Humor con sabor costeño", "Cartagena vibes", "Reels", "Cartagena de Indias", "Costa Caribe"],
 
   // 4ta tarjeta de stats (IG da seguidores/publicaciones/seguidos)
-  customStat: { value: "Cartagena", label: "Ciudad" },
+  customStat: { value: "Cartagena - Colombia", label: "Ciudad" },
 
   // Enlaces extra a fusionar además de Instagram + los bio_links de IG
   extraLinks: [
