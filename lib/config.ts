@@ -42,7 +42,7 @@ export const profileConfig = {
     x: "close",
     facebook: "thumb_up",
     whatsapp: "chat",
-    web: "movie_creation", // claqueta abierta (MonoProducciones)
+    web: "language",
     default: "link",
   } as Record<string, string>,
 

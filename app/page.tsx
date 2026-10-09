@@ -1,4 +1,5 @@
 import Background from "@/components/Background";
+import ClapperOpen from "@/components/ClapperOpen";
 import CountUp from "@/components/CountUp";
 import FloatCta from "@/components/FloatCta";
 import Loader from "@/components/Loader";
@@ -167,7 +168,11 @@ export default async function Home() {
                   <Spot href={s.url} className="glass group flex w-full items-center justify-between rounded-full py-3 pl-3 pr-6">
                     <div className="flex items-center gap-4">
                       <span className="linkicon">
-                        <span className="material-symbols-outlined text-[22px]">{icon(s.platform)}</span>
+                        {s.platform === "web" ? (
+                          <ClapperOpen className="h-[22px] w-[22px]" />
+                        ) : (
+                          <span className="material-symbols-outlined text-[22px]">{icon(s.platform)}</span>
+                        )}
                       </span>
                       <span className="font-display text-lg font-semibold text-primary">{s.label}</span>
                     </div>
