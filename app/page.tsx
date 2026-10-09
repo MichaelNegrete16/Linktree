@@ -422,7 +422,7 @@ export default async function Home() {
                   ¿Una colaboración con <span className="accent">sabor costeño</span>?
                 </h2>
                 <p className="mx-auto mt-4 max-w-sm text-body-md text-on-surface-variant">
-                  Escríbeme directo por Instagram y armamos algo bien chimba.
+                  Conectemos tu marca con el humor y la esencia de El Mono
                 </p>
                 <a
                   href={profileConfig.cta.url}

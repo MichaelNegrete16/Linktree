@@ -4,7 +4,7 @@ export const profileConfig = {
   brandLabel: "EL MONOCUCO",
   // CTA principal (botón blanco)
   cta: {
-    label: "Escríbeme por Instagram",
+    label: "Hablemos",
     url: "https://ig.me/m/elmonocuc0",
     icon: "mail",
   },
