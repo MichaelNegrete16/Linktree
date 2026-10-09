@@ -1,0 +1,51 @@
+name: refresh-instagram
+
+# Cada día: renueva el token de Meta (60 días -> otros 60), y actualiza los datos de Instagram
+# (perfil, reels, vistas, colaboraciones y audiencia). Si algo cambia, lo sube y se redespliega.
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Renovar token de Meta
+        id: token
+        env:
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+        run: |
+          NEW=$(node scripts/refresh-audience.mjs --exchange)
+          echo "::add-mask::$NEW"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+
+      - name: Guardar el token renovado en los secrets
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: gh secret set META_ACCESS_TOKEN --body "${{ steps.token.outputs.new }}" --repo "${{ github.repository }}"
+
+      - name: Actualizar Instagram y audiencia
+        env:
+          META_ACCESS_TOKEN: ${{ steps.token.outputs.new }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          node scripts/refresh-instagram.mjs
+          node scripts/refresh-audience.mjs
+
+      - name: Subir cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib public/fallback app/icon.jpg
+          git diff --cached --quiet || (git commit -m "chore: actualizar datos de Instagram" && git push)

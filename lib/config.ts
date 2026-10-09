@@ -2,11 +2,6 @@
 export const profileConfig = {
   username: "elmonocuc0",
   brandLabel: "EL MONOCUCO",
-  // App id público que usa la web de Instagram para su endpoint web_profile_info
-  igAppId: "936619743392459",
-  // cada cuánto se refrescan los datos desde Instagram (segundos)
-  revalidateSeconds: 3600,
-
   // CTA principal (botón blanco)
   cta: {
     label: "Escríbeme por Instagram",

@@ -1,0 +1,111 @@
+{
+  "updatedAt": "2026-10-09T03:15:28.291Z",
+  "gender": [
+    {
+      "key": "M",
+      "value": 5111,
+      "pct": 58.3
+    },
+    {
+      "key": "F",
+      "value": 2819,
+      "pct": 32.1
+    },
+    {
+      "key": "U",
+      "value": 841,
+      "pct": 9.6
+    }
+  ],
+  "age": [
+    {
+      "key": "13-17",
+      "value": 420,
+      "pct": 4.8
+    },
+    {
+      "key": "18-24",
+      "value": 968,
+      "pct": 11
+    },
+    {
+      "key": "25-34",
+      "value": 3225,
+      "pct": 36.8
+    },
+    {
+      "key": "35-44",
+      "value": 2476,
+      "pct": 28.2
+    },
+    {
+      "key": "45-54",
+      "value": 1067,
+      "pct": 12.2
+    },
+    {
+      "key": "55-64",
+      "value": 405,
+      "pct": 4.6
+    },
+    {
+      "key": "65+",
+      "value": 210,
+      "pct": 2.4
+    }
+  ],
+  "cities": [
+    {
+      "key": "Cartagena, Bolivar",
+      "value": 1740,
+      "pct": 33.9
+    },
+    {
+      "key": "Bogotá, Distrito Especial",
+      "value": 608,
+      "pct": 11.8
+    },
+    {
+      "key": "Barranquilla, Atlantico",
+      "value": 591,
+      "pct": 11.5
+    },
+    {
+      "key": "Medellín, Antioquia",
+      "value": 261,
+      "pct": 5.1
+    },
+    {
+      "key": "Montería, Cordoba",
+      "value": 162,
+      "pct": 3.2
+    }
+  ],
+  "countries": [
+    {
+      "key": "CO",
+      "value": 5967,
+      "pct": 68.3
+    },
+    {
+      "key": "MX",
+      "value": 411,
+      "pct": 4.7
+    },
+    {
+      "key": "US",
+      "value": 380,
+      "pct": 4.3
+    },
+    {
+      "key": "AR",
+      "value": 354,
+      "pct": 4.1
+    },
+    {
+      "key": "ES",
+      "value": 266,
+      "pct": 3
+    }
+  ]
+}

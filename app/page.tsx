@@ -7,6 +7,7 @@ import ReelsRail from "@/components/ReelsRail";
 import Reveal from "@/components/Reveal";
 import Spot from "@/components/Spot";
 import collabsData from "@/lib/collabs.json";
+import audienceData from "@/lib/audience.json";
 import igRecentData from "@/lib/ig-recent.json";
 import tiktokData from "@/lib/tiktok.json";
 import { getProfile, formatCount } from "@/lib/instagram";
@@ -15,12 +16,44 @@ import { profileConfig } from "@/lib/config";
 
 export const revalidate = 3600;
 
+type AudienceRow = { key: string; value: number; pct: number };
+const audienceRaw = audienceData as {
+  gender: AudienceRow[];
+  age: AudienceRow[];
+  cities: AudienceRow[];
+  countries: AudienceRow[];
+};
+// Solo se muestran los rangos de 18 a 54 años (el porcentaje sigue siendo sobre el total de seguidores)
+const audience = {
+  ...audienceRaw,
+  age: audienceRaw.age.filter((a) => {
+    const from = parseInt(a.key, 10);
+    return from >= 18 && from <= 45;
+  }),
+};
+const GENDER_LABEL: Record<string, string> = { M: "Hombres", F: "Mujeres", U: "Otros" };
+const regionNames = new Intl.DisplayNames(["es"], { type: "region" });
+const countryName = (code: string) => {
+  try {
+    return regionNames.of(code) ?? code;
+  } catch {
+    return code;
+  }
+};
+
 
 export default async function Home() {
   const p = await getProfile();
   const icon = (platform: string) => profileConfig.icons[platform] || profileConfig.icons.default;
   // Generado con `scripts/refresh-collabs.mjs` (reels con coautor), del más nuevo al más viejo
-  const collabPosts = collabsData as Post[];
+  // Las que rindieron muy bien se fijan en la 2ª (natación, TikTok) y 3ª (himno, @ae_topsport) posición.
+  const PINNED_AFTER_FIRST = ["7607660523160685845", "DaGX4vhzCOP"];
+  const collabAll = collabsData as Post[];
+  const pinned = PINNED_AFTER_FIRST.map((id) => collabAll.find((c) => c.url.includes(id))).filter(
+    (c): c is Post => !!c,
+  );
+  const collabRest = collabAll.filter((c) => !pinned.includes(c));
+  const collabPosts = [collabRest[0], ...pinned, ...collabRest.slice(1)].filter(Boolean);
   // Métricas: promedio de vistas y reacciones (likes) de los últimos 5 videos de cada red con al menos
   // 48 h de vida (los recién subidos aún no acumulan nada). Listas ordenadas por fecha, nuevo primero.
   const MATURE_MS = 48 * 3600 * 1000;
@@ -38,13 +71,6 @@ export default async function Home() {
     { name: "Instagram", icon: "photo_camera", views: avgOf(igRecent, "views"), likes: avgOf(igRecent, "likes"), url: `https://www.instagram.com/${p.username}/` },
     { name: "TikTok", icon: "play_circle", views: avgOf(ttRecent, "views"), likes: avgOf(ttRecent, "likes"), url: tiktokData.url },
   ];
-  const metrics =
-    allRecent.length > 0
-      ? [
-          { value: formatCount(avgOf(allRecent, "views")), label: "Vistas promedio" },
-          { value: formatCount(avgOf(allRecent, "likes")), label: "Reacciones promedio" },
-        ]
-      : [];
   const nameWords = p.name.split(" ");
   const bioLines = p.bio.split("\n").map((l) => l.trim()).filter(Boolean);
 
@@ -122,7 +148,7 @@ export default async function Home() {
             <Reveal>
               <section className="grid grid-cols-2 gap-3">
                 {p.stats.map((s) => (
-                  <Spot key={s.label} className="glass rounded-2xl p-5">
+                  <Spot key={s.label} className="glass rounded-2xl p-5 last:odd:col-span-2">
                     <span className="block font-display font-bold leading-none text-primary text-[1.55rem] min-[400px]:text-3xl md:text-[2rem]">
                       <CountUp value={s.value} />
                     </span>
@@ -237,7 +263,7 @@ export default async function Home() {
             )}
 
             {/* Métricas */}
-            {metrics.length > 0 && (
+            {allRecent.length > 0 && (
               <Reveal>
                 <section className="flex flex-col">
                   <div className="mb-5">
@@ -246,19 +272,7 @@ export default async function Home() {
                       La gente que <span className="accent">le llega</span>
                     </h2>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {metrics.map((m) => (
-                      <Spot key={m.label} className="glass rounded-2xl p-5">
-                        <span className="block font-display font-bold leading-none text-primary text-[1.55rem] min-[400px]:text-3xl">
-                          <CountUp value={m.value} />
-                        </span>
-                        <span className="mt-2 block font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">
-                          {m.label}
-                        </span>
-                      </Spot>
-                    ))}
-                  </div>
-                  <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     {networks.map((n) => (
                       <Spot key={n.name} href={n.url} className="glass rounded-2xl p-4">
                         <div className="flex items-center gap-3">
@@ -283,6 +297,88 @@ export default async function Home() {
                   </div>
                   <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-on-surface-variant/70">
                     Datos públicos · promedio de los últimos 5 videos de cada red
+                  </p>
+                </section>
+              </Reveal>
+            )}
+
+            {/* Audiencia (demografía de seguidores de Instagram, generada con scripts/refresh-audience.mjs) */}
+            {(audience.gender.length > 0 || audience.age.length > 0) && (
+              <Reveal>
+                <section className="flex flex-col">
+                  <div className="mb-5">
+                    <span className="eyebrow mb-3">Audiencia</span>
+                    <h2 className="h-sec">
+                      Quién lo <span className="accent">ve</span>
+                    </h2>
+                  </div>
+                  <div className="grid gap-3">
+                    {audience.gender.length > 0 && (
+                      <Spot className="glass rounded-2xl p-4">
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">Género</span>
+                          <div className="flex gap-5">
+                            {audience.gender.map((g) => (
+                              <span key={g.key} className="font-mono text-[11px] text-primary">
+                                <span className="font-display text-lg font-bold">{Math.round(g.pct)}%</span>{" "}
+                                <span className="uppercase tracking-[0.14em] text-gold-hi/80">{GENDER_LABEL[g.key] ?? g.key}</span>
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="mt-3 flex h-2.5 w-full overflow-hidden rounded-full bg-white/10">
+                          {audience.gender.map((g) => (
+                            <div
+                              key={g.key}
+                              className={g.key === "F" ? "bg-gold" : g.key === "M" ? "bg-gold-hi/60" : "bg-white/25"}
+                              style={{ width: `${g.pct}%` }}
+                            />
+                          ))}
+                        </div>
+                      </Spot>
+                    )}
+                    {audience.age.length > 0 && (
+                      <Spot className="glass rounded-2xl p-4">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">Edad</span>
+                        <div className="mt-3 flex h-24 items-end gap-2">
+                          {audience.age.map((a) => {
+                            const max = Math.max(...audience.age.map((x) => x.pct));
+                            return (
+                              <div key={a.key} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
+                                <span className="font-mono text-[10px] text-gold-hi">{Math.round(a.pct)}%</span>
+                                <div className="w-full rounded-t-md bg-gold" style={{ height: `${(a.pct / max) * 60}%` }} />
+                                <span className="font-mono text-[9px] text-primary/80">{a.key}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </Spot>
+                    )}
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { title: "Ciudades", rows: audience.cities.slice(0, 3) },
+                        { title: "Países", rows: audience.countries.slice(0, 3) },
+                      ]
+                        .filter((b) => b.rows.length > 0)
+                        .map((b) => (
+                          <Spot key={b.title} className="glass rounded-2xl p-4">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-gold-hi/80">{b.title}</span>
+                            <ul className="mt-2 flex flex-col gap-1.5">
+                              {b.rows.map((r) => (
+                                <li key={r.key} className="flex items-center justify-between gap-2 text-[12px] text-primary">
+                                  <span className="truncate">
+                                    {b.title === "Países" ? countryName(r.key) : r.key.split(",")[0]}
+                                  </span>
+                                  <span className="font-mono text-[11px] text-gold-hi">{Math.round(r.pct)}%</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </Spot>
+                        ))}
+                    </div>
+                  </div>
+                  <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-on-surface-variant/70">
+                    Seguidores de Instagram · datos de Meta
                   </p>
                 </section>
               </Reveal>

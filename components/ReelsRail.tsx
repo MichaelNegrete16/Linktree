@@ -35,7 +35,11 @@ export default function ReelsRail({ posts }: { posts: Post[] }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={post.image} alt={post.caption || `Reel ${i + 1}`} loading="lazy" />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/20" />
+            <div
+              className={`absolute inset-0 bg-gradient-to-t to-background/20 ${
+                post.platform ? "from-background/95 via-background/30" : "from-background/90 via-transparent"
+              }`}
+            />
             <span className="material-symbols-outlined absolute right-3 top-3 text-[22px] text-primary drop-shadow">
               play_circle
             </span>
@@ -50,19 +54,14 @@ export default function ReelsRail({ posts }: { posts: Post[] }) {
             )}
             <div className="absolute inset-x-0 bottom-0 p-3">
               {post.platform && (
-                <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-gold-hi">
-                  {post.partner ? (
-                    <>
-                      Colab con <span className="font-bold text-primary">@{post.partner}</span>
-                    </>
-                  ) : (
-                    "Colaboración"
-                  )}
-                  {post.platform === "tiktok" ? " · TikTok" : post.platform === "instagram" ? " · Instagram" : ""}
+                <p className="mb-2 inline-flex items-center rounded-full bg-background/80 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-gold-hi backdrop-blur-sm">
+                  {post.platform === "tiktok" ? "TikTok" : post.platform === "instagram" ? "Instagram" : "Colaboración"}
                 </p>
               )}
               {post.caption && (
-                <p className="line-clamp-2 text-[12px] leading-snug text-primary/95">{post.caption}</p>
+                <p className="line-clamp-2 text-[13px] font-medium leading-snug text-primary [text-shadow:0_1px_6px_rgba(0,0,0,0.9)]">
+                  {post.caption}
+                </p>
               )}
               {post.views != null && (
                 <span className="mt-1.5 flex items-center gap-1 font-mono text-[11px] text-gold-hi">
