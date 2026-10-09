@@ -17,6 +17,7 @@ const TT_PARTNERS = {
   "7661169832959741205": "chuchoal_barril",
   "7627936399680867605": "ae_topsport",
   "7616615950418218261": "chuchoal_barril",
+  "7607660523160685845": "corporaciondeportitanes",
 };
 
 const root = process.cwd();
