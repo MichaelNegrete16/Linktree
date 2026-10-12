@@ -5,7 +5,7 @@ export const profileConfig = {
   // CTA principal (botón blanco)
   cta: {
     label: "Hablemos",
-    url: "https://ig.me/m/elmonocuc0",
+    url: "https://www.instagram.com/elmonocuc0/",
     icon: "mail",
   },
 

@@ -426,8 +426,6 @@ export default async function Home() {
                 </p>
                 <a
                   href={profileConfig.cta.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="btn-cta mx-auto mt-8 max-w-sm"
                 >
                   <span className="material-symbols-outlined">{profileConfig.cta.icon}</span>
